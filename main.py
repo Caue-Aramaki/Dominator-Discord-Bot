@@ -24,7 +24,7 @@ def keep_alive():
 my_secret = os.environ['TOKEN']
 client = discord.Client()
 
-status = cycle(['I am dominator','Try `$ hi` on my DM'])
+status = cycle(['I am dominator','Try `$ hi(none)` on my DM'])
 
 
 @client.event
@@ -46,14 +46,14 @@ async def on_message(message):
     if message.content.startswith('$'):
         # prepares the input commands
         command_line = message.content
-        command_line = command_line.replace('$', "")
+        command_line = command_line.replace('$', "").replace(" ", "").replace("()", "(none)")
 
         from parse_find_package.parse_func import parse_functions
         from parse_find_package.find_com import find_command
 
         parsed_tree = parse_functions(command_line) # parses command
         
-        import command_functions_test as cf
+        import command_functions as cf
 
         result_list = [] # creates raw output
 
@@ -72,7 +72,7 @@ async def on_message(message):
             file_list.append(item) 
 
 
-          await message.channel.send(output) # send the text
+        await message.channel.send(output) # send the text
 
         for file_item in file_list: # send the files
           await message.channel.send(file=file_item)
@@ -81,7 +81,7 @@ async def on_message(message):
         
         for item in message.mentions:
           if item.id == client.user.id:
-            await message.channel.send("Try: ```$ hi```")
+            await message.channel.send("Try: ```$ commands(none)```")
       
     # else:
     #   # history = open('history.txt', 'a')
