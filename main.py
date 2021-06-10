@@ -53,7 +53,7 @@ async def on_message(message):
 
         parsed_tree = parse_functions(command_line) # parses command
         
-        import command_functions as cf
+        from commands_package import command_functions as cf
 
         result_list = [] # creates raw output
 
@@ -67,7 +67,7 @@ async def on_message(message):
         file_list = [] # outputs
 
         for item in result_list: # creates the outputs
-          output += str(item) + " "
+          output += str(item) + "\n"
           if type(item) == discord.file.File:
             file_list.append(item) 
 
