@@ -7,6 +7,8 @@ from commands_package.math_comm import add
 from commands_package.math_comm import multiply
 from commands_package.math_comm import sin
 from commands_package.math_comm import convert_base
+from commands_package.math_comm import prime_factor
+from commands_package.math_comm import exponential
 
 # logging functions
 from commands_package.log_comm import log_history
@@ -73,5 +75,9 @@ key_list = [["sin", sin, "```Outputs sin(x). sin(x)```"],
 
             ["linear", linear, "```Produces the input, unmodified. linear(x) = x```"],
 
-            ["info", info_help, "```Descripts command info. info(command name)```"]
+            ["info", info_help, "```Descripts command info. info(command name)```"],
+
+						["pfactor", prime_factor, "Prime factors. factor(x)"],
+
+						["exp", exponential, "Does exponent. exp(B, X) = B^X"]
             ]

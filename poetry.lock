@@ -159,6 +159,18 @@ version = "2.0.1"
 
 [[package]]
 category = "main"
+description = "Python library for arbitrary-precision floating-point arithmetic"
+name = "mpmath"
+optional = false
+python-versions = "*"
+version = "1.2.1"
+
+[package.extras]
+develop = ["pytest (>=4.6)", "pycodestyle", "pytest-cov", "codecov", "wheel"]
+tests = ["pytest (>=4.6)"]
+
+[[package]]
+category = "main"
 description = "multidict implementation"
 name = "multidict"
 optional = false
@@ -255,6 +267,17 @@ version = "1.16.0"
 
 [[package]]
 category = "main"
+description = "Computer algebra system (CAS) in Python"
+name = "sympy"
+optional = false
+python-versions = ">=3.6"
+version = "1.8"
+
+[package.dependencies]
+mpmath = ">=0.19"
+
+[[package]]
+category = "main"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 name = "typing-extensions"
 optional = false
@@ -298,7 +321,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "1f48c73ecd64eea82380ddde3e64acd4bc8daa585dad3bcb7f1aaf42294223bf"
+content-hash = "2f34e27647a811031d4a28d1903ec85d58e98a08258447582bd77d49bfadc2cb"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -424,6 +447,10 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp39-cp39-win32.whl", hash = "sha256:10f82115e21dc0dfec9ab5c0223652f7197feb168c940f3ef61563fc2d6beb74"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:693ce3f9e70a6cf7d2fb9e6c9d8b204b6b39897a2c4a1aa65728d5ac97dcc1d8"},
     {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
+]
+mpmath = [
+    {file = "mpmath-1.2.1-py3-none-any.whl", hash = "sha256:604bc21bd22d2322a177c73bdb573994ef76e62edd595d17e00aff24b0667e5c"},
+    {file = "mpmath-1.2.1.tar.gz", hash = "sha256:79ffb45cf9f4b101a807595bcb3e72e0396202e0b1d25d689134b48c4216a81a"},
 ]
 multidict = [
     {file = "multidict-5.1.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:b7993704f1a4b204e71debe6095150d43b2ee6150fa4f44d6d966ec356a8d61f"},
@@ -581,6 +608,10 @@ requests = [
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+sympy = [
+    {file = "sympy-1.8-py3-none-any.whl", hash = "sha256:3b0b3776e357f789951bb14776c6a841f931680f20d5f8fe55977885657c9b7a"},
+    {file = "sympy-1.8.tar.gz", hash = "sha256:1ca588a9f6ce6a323c5592f9635159c2093572826668a1022c75c75bdf0297cb"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},

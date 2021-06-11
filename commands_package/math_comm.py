@@ -40,3 +40,25 @@ def convert_base(input_1=None, input_2=None, input_3=None, input_list=None):
       return convert_num_from_x_to_y(int(input_list[0]), int(input_list[1]), int(input_list[2]))
   except Exception as problem:
     return "Error at convert_base: " + str(problem)
+
+def prime_factor(input=None, input_list=None):
+	from sympy.ntheory import factorint
+	try:
+		if input is not None: 
+			return	str(factorint(int(input)))
+		else:
+			return str(factorint(int(input_list[0])))
+	
+	except Exception as problem:
+		return "Error at prime_factor: " + str(problem)
+
+def exponential(input_1=None, input_2=None, input_list=None):
+  try:
+    if input_1 is not None:
+      return float(input_1) ** float(input_2) 
+    else:
+      return float(input_list[0]) ** float(input_list[1])
+  
+  except Exception as problem:
+    return "Error at sum_one: " + str(problem)
+
