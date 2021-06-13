@@ -15,3 +15,4 @@ def wish_rate_genshin(input=None, input_list=None):
 
   except Exception as problem:
     return "Error at wish_rate_genshin: " + str(problem)
+

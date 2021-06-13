@@ -9,88 +9,89 @@ from threading import Thread
 
 app = Flask('')
 
+
 @app.route('/')
 def home():
-    return "Hello. I am alive!"
+  return "Hello. I am alive!"
+
 
 def run():
-  app.run(host='0.0.0.0',port=8080)
+  app.run(host='0.0.0.0', port=8080)
+
 
 def keep_alive():
-    t = Thread(target=run)
-    t.start()
+  t = Thread(target=run)
+  t.start()
 
 
 my_secret = os.environ['TOKEN']
 client = discord.Client()
 
-status = cycle(['I am dominator','Try `$ hi(none)` on my DM'])
+status = cycle(['I am dominator', 'Try `$ hi(none)` on my DM'])
 
 
 @client.event
 async def on_ready():
-    change_status.start()
-    print('We have logged in as {0.user}'.format(client))
+  change_status.start()
+  print('We have logged in as {0.user}'.format(client))
+
 
 @tasks.loop(seconds=360)
 async def change_status():
   await client.change_presence(activity=discord.Game(next(status)))
 
 
-
 @client.event
 async def on_message(message):
-    if message.author == client.user:
-        return
+	if message.author == client.user:
+	  return
 
-    if message.content.startswith('$'):
-        # prepares the input commands
-        command_line = message.content
-        command_line = command_line.replace('$', "").replace(" ", "").replace("()", "(none)")
+	if message.content.startswith('$'):
+		# prepares the input commands
+		command_line = message.content
+		command_line = command_line.replace('$', "").replace(" ", "").replace("()", "(none)")
 
-        from parse_find_package.parse_func import parse_functions
-        from parse_find_package.find_com import find_command
+		from parse_find_package.parse_func import parse_functions
+		from parse_find_package.find_com import find_command
 
-        parsed_tree = parse_functions(command_line) # parses command
-        
-        from commands_package import command_functions as cf
+		parsed_tree = parse_functions(command_line)  # parses command
 
-        result_list = [] # creates raw output
+		from commands_package import command_functions as cf
 
-        for item in parsed_tree:
-          if type(item) == list:
-            result_list.append(find_command("linear", [item], cf.key_list))
-          else:
-            result_list.append(item) 
-        
-        output = ""
-        file_list = [] # outputs
+		result_list = []  # creates raw output
 
-        for item in result_list: # creates the outputs
-          output += str(item) + "\n"
-          if type(item) == discord.file.File:
-            file_list.append(item) 
+		for item in parsed_tree:
+			if type(item) == list:
+				result_list.append(find_command("linear", [item],	cf.key_list))
+			else:
+				result_list.append(item)
 
+		output = ""
+		file_list = []  # outputs
 
-        await message.channel.send(output) # send the text
+		for item in result_list:  # creates the outputs
 
-        for file_item in file_list: # send the files
-          await message.channel.send(file=file_item)
-      
-    if len(message.mentions) > 0:
-        
-        for item in message.mentions:
-          if item.id == client.user.id:
-            await message.channel.send("Try: ```$ commands(none)```")
-      
+			if type(item) == discord.file.File:
+				file_list.append(item)
+			if item is str:
+				output += '```\n' + str(item) + '\n```' + "\n"
+
+		if len(output) > 0:
+			await message.channel.send(output)  # send the text
+
+		for file_item in file_list:  # send the files
+			await message.channel.send(file=file_item)
+
+	if len(message.mentions) > 0:
+		for item in message.mentions:
+			if item.id == client.user.id:
+				await message.channel.send("Try: ```$ commands(none)```")
+
     # else:
     #   # history = open('history.txt', 'a')
     #   # history.write('\n' + message.content + '\t' + message.author.name + '\t' + str(message.author.id))
     #   # history.close()
     #   print(message.content)
-
-      
-
 
 
 keep_alive()

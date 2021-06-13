@@ -16,7 +16,7 @@ def log_history(last_n=None, input_list=None):
     for i in range(length - int(number), length):
       log_string = log_string + "\n" + log_list[i]
 
-    return "```" + log_string + "```"
+    return log_string
   
   except Exception as problem:
     return "Error at log_history: " + str(problem)

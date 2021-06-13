@@ -1,5 +1,4 @@
 
-
 def add(input_1=None, input_2=None, input_list=None):
   try:
     if input_1 is not None:

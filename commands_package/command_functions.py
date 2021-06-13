@@ -29,7 +29,7 @@ def list_commands(input=None, input_list=None):
     for item in key_list:
       text_output = text_output + "|" + item[0] + "|    "
 
-    return "```" + text_output + "```"
+    return text_output
   
   except Exception as problem:
     return "Error at list_commands: " + str(problem)
@@ -55,27 +55,27 @@ def info_help(input_string=None, input_list=None):
     return "Error at info_help: " + str(problem)
 
 
-key_list = [["sin", sin, "```Outputs sin(x). sin(x)```"], 
+key_list = [["sin", sin, "Outputs sin(x). sin(x)"], 
 
-            ["add", add, "```Add two numbers. add(x, y) = x + y```"],
+            ["add", add, "Add two numbers. add(x, y) = x + y"],
 
-            ["mult", multiply, "```Multiply two numbers. mult(x, y) = x * y```"],
+            ["mult", multiply, "Multiply two numbers. mult(x, y) = x * y"],
 
-            ["logh", log_history, "```Display history, logh(x)    NOT WORKING```"],
+            ["logh", log_history, "Display history, logh(x)    NOT WORKING"],
 
-            ["hi", hi, "```Outputs \"Hello!\". hi(none)```"],
+            ["hi", hi, "Outputs \"Hello!\". hi(none)"],
 
-            ["commands", list_commands, "```Lists commands. commands(none)```"],
+            ["commands", list_commands, "Lists commands. commands(none)"],
 
-            ["image", image, "```Sends an image. image(none)```"],
+            ["image", image, "Sends an image. image(none)"],
 
-            ["convert_base", convert_base, "```Converts a number N in base X to a number in base Y. convert_base(N, X, Y)```"],
+            ["convert_base", convert_base, "Converts a number N in base X to a number in base Y. convert_base(N, X, Y)"],
 
-            ["con_rate", wish_rate_genshin, "```Displays the chart of constellations given X primogems. con_rate(X)```"],
+            ["con_rate", wish_rate_genshin, "Displays the chart of constellations given X primogems. con_rate(X)"],
 
-            ["linear", linear, "```Produces the input, unmodified. linear(x) = x```"],
+            ["linear", linear, "Produces the input, unmodified. linear(x) = x"],
 
-            ["info", info_help, "```Descripts command info. info(command name)```"],
+            ["info", info_help, "Descripts command info. info(command name)"],
 
 						["pfactor", prime_factor, "Prime factors. factor(x)"],
 
