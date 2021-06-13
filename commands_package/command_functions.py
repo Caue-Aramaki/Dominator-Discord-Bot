@@ -1,6 +1,4 @@
 
-import discord
-
 # math functions
 from parse_find_package.linear  import linear
 from commands_package.math_comm import add

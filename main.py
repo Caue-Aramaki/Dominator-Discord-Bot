@@ -68,19 +68,28 @@ async def on_message(message):
 
 		output = ""
 		file_list = []  # outputs
+		embed_list = []
 
-		for item in result_list:  # creates the outputs
+		for item in result_list:  # creates the outputs, based on what type of objects we will receive
 
 			if type(item) == discord.file.File:
 				file_list.append(item)
-			if item is str:
+
+			if type(item) == discord.Embed:
+				embed_list.append(item)
+			
+			if type(item) is str:
 				output += '```\n' + str(item) + '\n```' + "\n"
+
 
 		if len(output) > 0:
 			await message.channel.send(output)  # send the text
 
 		for file_item in file_list:  # send the files
 			await message.channel.send(file=file_item)
+
+		for embed_item in embed_list:
+			await message.channel.send(embed = embed_item)
 
 	if len(message.mentions) > 0:
 		for item in message.mentions:
