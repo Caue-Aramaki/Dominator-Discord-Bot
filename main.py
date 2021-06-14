@@ -44,8 +44,6 @@ async def change_status():
 @client.event
 async def on_message(message):
 
-	await client.process_commands(message)
-
 	if message.author == client.user:
 	  return
 
@@ -74,6 +72,7 @@ async def on_message(message):
 		embed_list = []
 
 		for item in result_list:  # creates the outputs, based on what type of objects we will receive
+			output += '```\n' + str(item) + '\n```' + "\n"
 
 			if type(item) == discord.file.File:
 				file_list.append(item)
@@ -81,8 +80,6 @@ async def on_message(message):
 			if type(item) == discord.Embed:
 				embed_list.append(item)
 			
-			if type(item) is str:
-				output += '```\n' + str(item) + '\n```' + "\n"
 
 
 		if len(output) > 0:
@@ -98,6 +95,8 @@ async def on_message(message):
 		for item in message.mentions:
 			if item.id == client.user.id:
 				await message.channel.send("Try: ```$ commands(none), or d!help```")
+
+	await client.process_commands(message) # since custom parsing and discord supported commands do not go along well, this command needs to be used. it basically detects if the message has the command prefix. we also use different prefixes.
 
     # else:
     #   # history = open('history.txt', 'a')
@@ -146,23 +145,32 @@ async def leave_voice_channel(ctx):
 )
 async def play_speech(ctx, *args):
 	try:
+		# joins the arguments into one text variable
 		speech_text = ""
 		for item in args:
 			speech_text += item + " "
 
-		guild = ctx.guild
+		guild = ctx.guild 
 		
 		voice_client: discord.VoiceClient = discord.utils.get(client.voice_clients, guild=guild)
 
-		from langdetect import detect_langs
-		lang = str(max(detect_langs(speech_text)))[0:2]
+		try:
+			# detects which language
+			from langdetect import detect_langs
+			lang = str(max(detect_langs(speech_text)))[0:2]
 
-		from gtts import gTTS
+			# creates a mp3 value with the speech
+			from gtts import gTTS
+			speech = gTTS(text=speech_text, lang=lang)
+		except:
+			# handles, in case there are no features or supported languages.
+			from gtts import gTTS
+			speech = gTTS(text=speech_text, lang='en')
 
-		speech = gTTS(text=speech_text, lang=lang)
 
 		speech.save("custom_packages/text_to_speech/speech.mp3")
 		
+		# plays the mp3 file
 		audio_source = discord.FFmpegPCMAudio("custom_packages/text_to_speech/speech.mp3")
 
 		if not voice_client.is_playing():
