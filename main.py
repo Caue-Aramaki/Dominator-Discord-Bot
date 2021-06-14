@@ -25,7 +25,7 @@ def keep_alive():
 
 
 my_secret = os.environ['TOKEN']
-client = commands.Bot(command_prefix="d!")
+client = commands.Bot(command_prefix="d")
 
 status = cycle(['I am dominator', 'Try `$ hi(none)` on my DM'])
 
@@ -97,7 +97,7 @@ async def on_message(message):
 	if len(message.mentions) > 0:
 		for item in message.mentions:
 			if item.id == client.user.id:
-				await message.channel.send("Try: ```$ commands(none)```")
+				await message.channel.send("Try: ```$ commands(none), or d!help```")
 
     # else:
     #   # history = open('history.txt', 'a')
@@ -108,24 +108,65 @@ async def on_message(message):
 @client.command(
 	name = "ping"
 )
-async def ping(ctx):
-	await ctx.channel.send("pong")
+async def ping(ctx, *args):
+	try:
+		text = ""
 
+		for item in args:
+			text += item + " "
+
+		await ctx.channel.send(text)
+	except Exception as problem:
+		await ctx.channel.send(str(problem))
 
 @client.command(
 	name = "join"
 )
 async def join_voice_channel(ctx):
-    channel = ctx.author.voice.channel
-    await channel.connect()
+	try:	
+		channel = ctx.author.voice.channel
+		await channel.connect()
+		await ctx.channel.send("Connected!")
+	except Exception as problem:
+		await ctx.channel.send(str(problem))
 
 
 @client.command(
 	name = "leave"
 )
 async def leave_voice_channel(ctx):
-    await ctx.voice_client.disconnect()
+	try:
+		await ctx.voice_client.disconnect()
+	except Exception as problem:
+		await ctx.channel.send(str(problem))
 
+
+@client.command(
+	name="tts"
+)
+async def play_speech(ctx, lang, *args):
+	try:
+		speech_text = ""
+		for item in args:
+			speech_text += item + " "
+
+		guild = ctx.guild
+		
+		voice_client: discord.VoiceClient = discord.utils.get(client.voice_clients, guild=guild)
+
+		from gtts import gTTS
+
+		speech = gTTS(text=speech_text, lang=lang)
+
+		speech.save("custom_packages/text_to_speech/speech.mp3")
+		
+		audio_source = discord.FFmpegPCMAudio("custom_packages/text_to_speech/speech.mp3")
+
+		if not voice_client.is_playing():
+			voice_client.play(audio_source, after=None)
+	
+	except Exception as problem:
+		await ctx.channel.send(str(problem))
 
 
 keep_alive()
