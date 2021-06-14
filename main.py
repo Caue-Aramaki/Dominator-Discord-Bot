@@ -144,7 +144,7 @@ async def leave_voice_channel(ctx):
 @client.command(
 	name="tts"
 )
-async def play_speech(ctx, lang, *args):
+async def play_speech(ctx, *args):
 	try:
 		speech_text = ""
 		for item in args:
@@ -153,6 +153,9 @@ async def play_speech(ctx, lang, *args):
 		guild = ctx.guild
 		
 		voice_client: discord.VoiceClient = discord.utils.get(client.voice_clients, guild=guild)
+
+		from langdetect import detect_langs
+		lang = str(max(detect_langs(speech_text)))[0:2]
 
 		from gtts import gTTS
 
