@@ -25,7 +25,7 @@ def keep_alive():
 
 
 my_secret = os.environ['TOKEN']
-client = discord.Client()
+client = commands.Bot(command_prefix="d!")
 
 status = cycle(['I am dominator', 'Try `$ hi(none)` on my DM'])
 
@@ -43,6 +43,9 @@ async def change_status():
 
 @client.event
 async def on_message(message):
+
+	await client.process_commands(message)
+
 	if message.author == client.user:
 	  return
 
@@ -101,6 +104,28 @@ async def on_message(message):
     #   # history.write('\n' + message.content + '\t' + message.author.name + '\t' + str(message.author.id))
     #   # history.close()
     #   print(message.content)
+
+@client.command(
+	name = "ping"
+)
+async def ping(ctx):
+	await ctx.channel.send("pong")
+
+
+@client.command(
+	name = "join"
+)
+async def join_voice_channel(ctx):
+    channel = ctx.author.voice.channel
+    await channel.connect()
+
+
+@client.command(
+	name = "leave"
+)
+async def leave_voice_channel(ctx):
+    await ctx.voice_client.disconnect()
+
 
 
 keep_alive()
