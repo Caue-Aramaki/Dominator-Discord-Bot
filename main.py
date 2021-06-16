@@ -25,9 +25,9 @@ def keep_alive():
 
 
 my_secret = os.environ['TOKEN']
-client = commands.Bot(command_prefix="d")
+client = commands.Bot(command_prefix="d.")
 
-status = cycle(['I am dominator', 'Try `$ hi(none)` on my DM'])
+status = cycle(['I am dominator', 'Try `$$ hi(none)` on my DM'])
 
 
 @client.event
@@ -47,10 +47,10 @@ async def on_message(message):
 	if message.author == client.user:
 	  return
 
-	if message.content.startswith('$'):
+	if message.content.startswith('$$'):
 		# prepares the input commands
 		command_line = message.content
-		command_line = command_line.replace('$', "").replace(" ", "").replace("()", "(none)")
+		command_line = command_line.replace('$$', "").replace(" ", "").replace("()", "(none)")
 
 		from parse_find_package.parse_func import parse_functions
 		from parse_find_package.find_com import find_command
@@ -94,9 +94,12 @@ async def on_message(message):
 	if len(message.mentions) > 0:
 		for item in message.mentions:
 			if item.id == client.user.id:
-				await message.channel.send("Try: ```$ commands(none), or d!help```")
+				await message.channel.send("Try: ```$$ commands(none), or d.help```")
 
-	await client.process_commands(message) # since custom parsing and discord supported commands do not go along well, this command needs to be used. it basically detects if the message has the command prefix. we also use different prefixes.
+	try:
+		await client.process_commands(message)
+	except Exception as problem:
+		await message.channel.send(problem) # since custom parsing and discord supported commands do not go along well, this command needs to be used. it basically detects if the message has the command prefix. we also use different prefixes.
 
     # else:
     #   # history = open('history.txt', 'a')
@@ -104,22 +107,11 @@ async def on_message(message):
     #   # history.close()
     #   print(message.content)
 
-@client.command(
-	name = "ping"
-)
-async def ping(ctx, *args):
-	try:
-		text = ""
-
-		for item in args:
-			text += item + " "
-
-		await ctx.channel.send(text)
-	except Exception as problem:
-		await ctx.channel.send(str(problem))
 
 @client.command(
-	name = "join"
+	name = "join",
+	help = "Joins current voice channel.",
+	brief = "Joins VC."
 )
 async def join_voice_channel(ctx):
 	try:	
@@ -131,7 +123,9 @@ async def join_voice_channel(ctx):
 
 
 @client.command(
-	name = "leave"
+	name = "leave",
+	help = "Disconnects from current voice channel.",
+	brief = "Leaves VC."
 )
 async def leave_voice_channel(ctx):
 	try:
@@ -141,7 +135,9 @@ async def leave_voice_channel(ctx):
 
 
 @client.command(
-	name="tts"
+	name="tts",
+	help = "Detects language and tries to convert to speech.",
+	brief = "TTS."
 )
 async def play_speech(ctx, *args):
 	try:
